@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <RootNamespace>WindowsOptimizer.App</RootNamespace>
+    <AssemblyName>Winora</AssemblyName>
+    <AssemblyTitle>Winora</AssemblyTitle>
+    <Description>Winora — оптимизация Windows 10 и Windows 11, очистка диска от мусора, ремонт реестра, отключение телеметрии, ускорение ПК. Предпросмотр перед удалением, бэкап .reg.</Description>
+    <PackageTags>winora;windows;windows-10;windows-11;optimizer;disk-cleanup;registry-cleaner;privacy;telemetry;debloat;performance;cleaner;portable;recycle-bin;tweaks;wpf;dotnet;csharp</PackageTags>
+    <ApplicationTitle>Winora</ApplicationTitle>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsOptimizer.Core\WindowsOptimizer.Core.csproj" />
+    <ProjectReference Include="..\WindowsOptimizer.Infrastructure\WindowsOptimizer.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

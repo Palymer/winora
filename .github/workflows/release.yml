@@ -1,0 +1,95 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (for example v0.1.0-alpha)"
+        required: true
+        default: "v0.1.0-alpha"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Test
+        run: dotnet test WindowsOptimizer.sln -c Release --nologo
+
+      - name: Publish portable exe
+        run: >
+          dotnet publish src/WindowsOptimizer.App
+          -c Release
+          -r win-x64
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true
+          -p:DebugType=None
+          -p:DebugSymbols=false
+          -o dist/Winora
+
+      - name: Package zip
+        shell: pwsh
+        run: |
+          Compress-Archive -Path dist/Winora/Winora.exe -DestinationPath dist/Winora-win-x64.zip -Force
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
+        run: |
+          if ("${{ github.event_name }}" -eq "workflow_dispatch") {
+            $tag = "${{ github.event.inputs.tag }}"
+            $target = "--target"
+            $sha = "${{ github.sha }}"
+          } else {
+            $tag = "${{ github.ref_name }}"
+            $target = $null
+            $sha = $null
+          }
+
+          $title = "Winora $($tag.TrimStart('v'))"
+          $prerelease = $tag -match '(?i)(alpha|beta|rc|preview)'
+
+          $notes = @"
+          ## Winora $title
+
+          Portable Windows 10/11 optimizer (self-contained win-x64).
+
+          - ``Winora.exe`` — запуск без установки .NET
+          - ``Winora-win-x64.zip`` — тот же exe в архиве
+
+          Changelog: see ``docs/CHANGELOG.md``.
+          "@
+
+          $notesPath = Join-Path $env:RUNNER_TEMP "release-notes.md"
+          Set-Content -Path $notesPath -Value $notes -Encoding utf8
+
+          $ghArgs = @(
+            "release", "create", $tag,
+            "dist/Winora/Winora.exe#Winora.exe",
+            "dist/Winora-win-x64.zip#Winora-win-x64.zip",
+            "--title", $title,
+            "--notes-file", $notesPath
+          )
+          if ($target) {
+            $ghArgs += @($target, $sha)
+          }
+          if ($prerelease) {
+            $ghArgs += "--prerelease"
+          }
+
+          gh @ghArgs
