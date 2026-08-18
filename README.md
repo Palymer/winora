@@ -102,7 +102,7 @@ Keywords: `windows-optimizer` `disk-cleaner` `registry-cleaner` `windows-11` `wi
 
 ## Релиз
 
-Тег `v0.1.0-alpha` собирает portable exe в GitHub Actions и публикует GitHub Release (prerelease). Следующий релиз: обновить версию в `Directory.Build.props`, запушить тег `vX.Y.Z` или `vX.Y.Z-alpha`.
+Тег `v0.1.0-alpha` собирает portable exe в GitHub Actions и публикует Latest-релиз в боковой панели репозитория. Следующий релиз: обновить версию в `Directory.Build.props` и запушить тег `vX.Y.Z`.
 
 ## Исходный код
 
