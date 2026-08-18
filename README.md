@@ -1,5 +1,10 @@
 # Winora — оптимизация Windows 10 и Windows 11, очистка диска и ремонт реестра
 
+[![Download](https://img.shields.io/github/v/release/Palymer/winora?label=Download&color=2ea043)](https://github.com/Palymer/winora/releases/latest)
+[![Releases](https://img.shields.io/github/downloads/Palymer/winora/total?label=downloads)](https://github.com/Palymer/winora/releases)
+
+**[Скачать Winora.exe](https://github.com/Palymer/winora/releases/latest/download/Winora.exe)** · **[Все сборки](https://github.com/Palymer/winora/releases)**
+
 **Winora** — бесплатная настольная программа для **оптимизации Windows**, **ускорения компьютера**, **очистки диска от мусора** и **ремонта реестра**. Подходит для Windows 10 и Windows 11: домашние ПК, игровые сборки и рабочие станции после чистой установки.
 
 Ищите по запросам: Winora, оптимизатор Windows, очистка реестра Windows 11, очистка временных файлов, удаление мусора с диска, ускорение Windows 10, отключение телеметрии, ремонт битых ярлыков, аналог CCleaner на русском, privacy tweaks, Windows registry cleaner.
@@ -52,7 +57,10 @@ Winora собирает в одном окне то, что обычно дел�
 
 ## Скачать Winora
 
-Актуальная сборка: [релизы GitHub](https://github.com/Palymer/winora/releases) — **0.1.0 Alpha**, portable `Winora.exe` (win-x64, .NET внутри, установка не нужна).
+- **[Winora.exe](https://github.com/Palymer/winora/releases/latest/download/Winora.exe)** — portable, Windows 10/11 x64, **0.1.0 Alpha**
+- **[Все сборки](https://github.com/Palymer/winora/releases)** — страница релизов GitHub
+
+Установка .NET не нужна. При старте Windows запросит права администратора (UAC) — они нужны для очистки системных папок и HKLM.
 
 Запуск из исходников:
 
@@ -65,8 +73,6 @@ dotnet run --project src/WindowsOptimizer.App
 ```powershell
 dotnet publish src/WindowsOptimizer.App -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -o dist/Winora
 ```
-
-При старте Windows запросит права администратора (UAC) — они нужны для очистки системных папок и HKLM.
 
 Бэкапы реестра: `%LocalAppData%\Winora\Backups`  
 Журналы: `%LocalAppData%\Winora\Logs`

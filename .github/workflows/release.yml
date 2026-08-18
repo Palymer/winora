@@ -62,7 +62,6 @@ jobs:
           }
 
           $title = "Winora $($tag.TrimStart('v'))"
-          $prerelease = $tag -match '(?i)(alpha|beta|rc|preview)'
 
           $notes = @"
           ## Winora $title
@@ -83,13 +82,11 @@ jobs:
             "dist/Winora/Winora.exe#Winora.exe",
             "dist/Winora-win-x64.zip#Winora-win-x64.zip",
             "--title", $title,
-            "--notes-file", $notesPath
+            "--notes-file", $notesPath,
+            "--latest"
           )
           if ($target) {
             $ghArgs += @($target, $sha)
-          }
-          if ($prerelease) {
-            $ghArgs += "--prerelease"
           }
 
           gh @ghArgs
